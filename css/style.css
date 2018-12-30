@@ -1,0 +1,86 @@
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+    background-color: white;
+}
+
+#banner {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 3em;
+    color: white;
+}
+
+.menuButton{
+	margin-left: 10px;
+	font-size: 20px;
+	padding: 0 10px 0 10px;
+}
+
+/* Navbar */
+.navbar, .navbar-inverse {
+	border-radius: 0;
+	border: none;
+	margin-bottom: 0;
+	min-height: 80px;
+}
+
+.navbar-nav {
+	width: 100%;
+}
+
+.nav li {
+	display: inline;
+	color: white;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+	color: white;
+	font-size: 1.7em;
+	font-weight: 300;
+	padding: 30px 25px 33px 25px;
+}
+
+.navbar-inverse .navbar-nav li a:hover {
+	background-color: forestgreen;
+	transition: 0.7s all linear;
+}
+/* End Navbar */
+
+.menu-icon {
+    color: white;
+}
+
+.results {
+	background-color: silver;
+}
+
+.confirmation {
+	width: 260px;
+	margin: auto;
+}
+
+.budget_column {
+	width: 50%;
+    text-align: center;
+}
+
+.budget_column_amount {
+	width: 50%;
+	text-align: left;
+}
+
+@media (min-width: 768px)
+{
+	.navbar-nav {
+		justify-content: center;
+		display: flex;
+		flex-wrap: wrap;
+	}
+}
+
+#date_range {
+	margin-top: 5px;
+}
+
+.btn-default.btn-on.active{background-color: #5BB75B;color: white;}
+.btn-default.btn-off.active{background-color: #DA4F49;color: white;}
