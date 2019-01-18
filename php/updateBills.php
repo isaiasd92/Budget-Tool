@@ -17,7 +17,7 @@
         $update_bill_query = "UPDATE bills SET company = '$update_bill_company', due_date = '$update_bill_dueDate', amount = '$update_bill_amount', notes = '$update_bill_notes', is_paid = '$update_bill_is_paid' WHERE id = '$update_bill_id';";
         
         if(mysqli_query($conn, $update_bill_query)){
-            $update_select_bill_query = "SELECT id, company, amount, due_date, is_paid FROM bills ORDER BY id DESC;";
+            $update_select_bill_query = "SELECT id, company, amount, due_date, is_paid FROM bills ORDER BY id ASC;";
             $update_select_bill_result = mysqli_query($conn, $update_select_bill_query);
             $output .= '
                 <table class="table table-bordered">

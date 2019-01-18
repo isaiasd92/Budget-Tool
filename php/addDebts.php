@@ -16,14 +16,14 @@
         $add_debt_query = "INSERT INTO debt(company, due_date, amount, notes, is_paid) VALUES('$add_debt_company', '$add_debt_dueDate', '$add_debt_amount', '$add_debt_notes', '$add_debt_is_paid'); ";
 
         if(mysqli_query($conn, $add_debt_query)){
-            $add_debt_select_query = "SELECT id, company, amount, due_date, is_paid FROM debt ORDER BY id DESC;";
+            $add_debt_select_query = "SELECT id, company, amount, due_date, is_paid FROM debt ORDER BY id ASC;";
             $add_debt_select_result = mysqli_query($conn, $add_debt_select_query);
             $output .= '
                 <table class="table table-bordered">
                     <tr class="results" >
                         <th>Debt</th>
                         <th>Amount</th>
-                        <th>Due Date</th>
+                        <th>Pay Off</th>
                         <th>Paid</th>
                         <th></th>
                     </tr>';

@@ -20,11 +20,6 @@ $(document).ready(function(){
             }
         });
     });
-    // End View Budget Info In Date Range
-
-    // ##############################################
-    //                  END HOME
-    // ##############################################
 
     // ##############################################
     //                  BILLS
@@ -43,7 +38,6 @@ $(document).ready(function(){
             }
         });
     });
-    // End View Bill Info
 
     // Add Bill
     $(document).on('click', "#insert_bill", function(){
@@ -90,7 +84,6 @@ $(document).ready(function(){
             $('#bill_add_amount').attr('style','border-color: red; border-width: 2px; color: red;');
         }
     });
-    // End Add Bill
 
     // Edit Bill
     $(document).on('click', '.edit_bills', function(){
@@ -105,7 +98,6 @@ $(document).ready(function(){
             }
         });
     });
-    // End Edit Bill
 
     // Update Bill
     $(document).on('click', "#update_bill", function(){
@@ -142,7 +134,6 @@ $(document).ready(function(){
             }
         });
     });
-    // End Update Bill
 
     // Delete Bill
     $(document).on('click', '.delete_bill', function(){
@@ -157,7 +148,72 @@ $(document).ready(function(){
             }
         });
     });
-    // End Delete Bill
+
+    $(document).on('click', '#date-title-link', function(){
+        $("#bill-months").addClass("hide");
+        $("#bill-years").removeClass("hide");
+        $("#date-title").html("");
+    });
+
+    // bills Chart Legend click event
+    $(document).on('click', '#bill-chart-legend > ul > li', function(e){
+            var index = $(this).index();
+            $(this).toggleClass("strike")
+            var ci = e.view.myChart;
+            console.log(index)
+            console.log();
+            var curr = ci.data.datasets[0]._meta[0].data[index];
+            curr.hidden = !curr.hidden
+            ci.update();
+    })
+
+    // Converts the month number to the month name
+    function GetMonthName(monthNumber) {
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return months[monthNumber - 1];
+    }
+
+    // Year Button Click
+    $(document).on('click', '.year-button', function(){
+        var bill_year = $(this).val();
+
+        $("#bill-months").removeClass("hide");
+        $("#bill-years").addClass("hide");
+        $("#date-title").html(bill_year);
+    });
+
+    // Month Button Click
+    $(document).on('click', '.month-button', function(){
+        var bill_month = $(this).val();
+        var bill_year = $("#date-title").html();
+        var bill_date = GetMonthName(bill_month) + " " + bill_year;
+
+        $("#bill-months").addClass("hide");
+        $("#date-title").html(bill_date);
+
+        $.ajax({
+            url:"/php/getBillSummary.php",
+            method:"POST",
+            data:{
+                    bill_month: bill_month,
+                    bill_year: bill_year
+            },
+            success: function(data){
+                $('#thisChart').html(data);
+                $("#bill-chart-legend-container").removeClass("hide");
+            }
+        });
+    });
+
+    // Chart Button Click
+    $(document).on('click', '#bill-chartButton', function(){
+        $("#bill-icon-chartButton").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+    });
+
+    // Table Button Click
+    $(document).on('click', '#bill-tableButton', function(){
+        $("#bill-icon-tableButton").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+    });
 
     // Change Input Style
     $(document).on('click', "#bill_add_company", function(){
@@ -175,11 +231,6 @@ $(document).ready(function(){
     $(document).on('click', "#bill_add_amount", function(){
         $('#bill_add_amount').attr('style','border-color: default; border-width: default; color: default;').val('');
     });
-    // End Change Input Style
-
-    // ##############################################
-    //                  END BILLS
-    // ##############################################
 
     // ##############################################
     //                  INCOME
@@ -198,7 +249,6 @@ $(document).ready(function(){
             }
         });
     });
-    // End View Income Info
 
     // Add Income
     $(document).on('click', "#insert_income", function(){
@@ -233,7 +283,6 @@ $(document).ready(function(){
             $('#income_add_amount').attr('style','border-color: red; border-width: 2px; color: red;');
         }
     });
-    // End Add Income
 
     // Edit Income
     $(document).on('click', '.edit_incomes', function(){
@@ -248,7 +297,6 @@ $(document).ready(function(){
             }
         });
     });
-    // End Edit Income
 
     // Update Income
     $(document).on('click', "#update_income", function(){
@@ -273,7 +321,6 @@ $(document).ready(function(){
             }
         });
     });
-    // End Update Income
 
     // Delete Income
     $(document).on('click', '.delete_income', function(){
@@ -288,7 +335,6 @@ $(document).ready(function(){
             }
         });
     });
-    // End Delete Income
 
     // Change Input Style
     $(document).on('click', "#income_add_name", function(){
@@ -306,11 +352,6 @@ $(document).ready(function(){
     $(document).on('click', "#income_add_amount", function(){
         $('#income_add_amount').attr('style','border-color: default; border-width: default; color: default;').val('');
     });
-    // End Change Input Style
-
-    // ##############################################
-    //                  END INCOME
-    // ##############################################
 
     // ##############################################
     //                  DEBT
@@ -329,7 +370,6 @@ $(document).ready(function(){
             }
         });
     });
-    // End View Debt Info
 
     // Add Debt
     $(document).on('click', "#insert_debt", function(){
@@ -391,7 +431,6 @@ $(document).ready(function(){
             }
         });
     });
-    // End Edit Debt
 
     // Update Debt
     $(document).on('click', "#update_debt", function(){
@@ -428,7 +467,6 @@ $(document).ready(function(){
             }
         });
     });
-    // End Update Debt
 
     // Delete Debt
     $(document).on('click', '.delete_debt', function(){
@@ -443,7 +481,6 @@ $(document).ready(function(){
             }
         });
     });
-    // End Delete Debt
 
     // Change Input Style
     $(document).on('click', "#debt_add_company", function(){
@@ -461,14 +498,15 @@ $(document).ready(function(){
     $(document).on('click', "#debt_add_amount", function(){
         $('#debt_add_amount').attr('style','border-color: default; border-width: default; color: default;').val('');
     });
-    // End Change Input Style
 
-    // ##############################################
-    //                  END DEBT
-    // ##############################################
+    // Menu Collapse Icon Changer
+    $('.collapse').on('shown.bs.collapse', function(){
+        $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+        }).on('hidden.bs.collapse', function(){
+        $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+    });
 
     // Add Due Date Defaults
     $.fn.datepicker.defaults.autoclose = true;
     $.fn.datepicker.defaults.format = 'yyyy-mm-dd';
-    // End Due Date Defaults
 });

@@ -78,8 +78,10 @@
         ?>
         <!-- Bills -->
         <table class="table calculator_table">
+            <h1 data-toggle="collapse" data-target="#accordion" class="clickable">Bills</h1>
+            <tr id="accordion" class="collapse">
             <tr class="results">
-                <th>Bills</th>
+                <th></th>
                 <th>Company</th>
                 <th>Amount</th>
                 <th>Due Date</th>
@@ -102,6 +104,7 @@
                 <td>
                     <?php echo $data_bill_row["due_date"]; ?>
                 </td>
+            </tr>
             </tr>
             <?php
                 }
@@ -141,7 +144,6 @@
             ?>
         </table>
         <!-- End Debt -->
-        
         <!-- End Calculator -->
     </body>
 </html>

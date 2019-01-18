@@ -33,7 +33,7 @@
                 <h1>Total Due</h1>
             </td>
             <td class="budget_column_amount">
-                <h1><b>$ '.$budget_bill_total.'</b></h1>
+                <h1><b>$ '.number_format($budget_bill_total, 2, '.','').'</b></h1>
             </td>
         </tr>
         <tr class="alert-success">
@@ -41,7 +41,7 @@
                 <h1>Total Income</h1>
             </td>
             <td class="budget_column_amount">
-                <h1><b>$ '.$budget_income_total.'</b></h1>
+                <h1><b>$ '.number_format($budget_income_total, 2, '.','').'</b></h1>
             </td>
         </tr>
         <tr class="alert-info">
@@ -49,7 +49,7 @@
                 <h1>Balance</h1>
             </td>
             <td class="budget_column_amount">
-                <h1><b>$ '.$budget_balance.'</b></h1>
+                <h1><b>$ '.number_format($budget_balance, 2, '.','').'</b></h1>
             </td>
         </tr>
         ';

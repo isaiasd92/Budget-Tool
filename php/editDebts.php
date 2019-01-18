@@ -26,7 +26,7 @@
                 </div>
                 <br />
                 <label>
-                    Due Date
+                    Pay Off
                 </label>
                 <div class="input-group date" data-provide="datepicker">
                     <div class="input-group-addon">
@@ -91,7 +91,7 @@
                     <input type="text" disabled="disabled" id="edit_debt_id" value="'.$edit_debt_row["id"].'" class="form-control" />
                 </div>
                 <br />
-                <button type="button" name="insert" id="update_debt" class="btn btn-success">insert</button>
+                <button type="button" name="update" id="update_debt" class="btn btn-success">Update</button>
             </form> ';
         }
 

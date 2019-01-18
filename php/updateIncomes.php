@@ -15,7 +15,7 @@
         $update_income_query = "UPDATE income SET name = '$update_income_name', pay_date = '$update_income_payDate', amount = '$update_income_amount' WHERE id = '$update_income_id';";
         
         if(mysqli_query($conn, $update_income_query)){
-            $update_income_select_query = "SELECT id, name, amount, pay_date FROM income ORDER BY id DESC;";
+            $update_income_select_query = "SELECT id, name, amount, pay_date FROM income ORDER BY id ASC;";
             $update_income_select_result = mysqli_query($conn, $update_income_select_query);
             $output .= '
                 <table class="table table-bordered">

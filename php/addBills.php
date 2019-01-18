@@ -16,7 +16,7 @@
         $add_bill_query = "INSERT INTO bills(company, due_date, amount, notes, is_paid) VALUES('$add_bill_company', '$add_bill_dueDate', '$add_bill_amount', '$add_bill_notes', '$add_bill_is_paid'); ";
 
         if(mysqli_query($conn, $add_bill_query)){
-            $add_bill_select_query = "SELECT id, company, amount, due_date, is_paid FROM bills ORDER BY id DESC;";
+            $add_bill_select_query = "SELECT id, company, amount, due_date, is_paid FROM bills ORDER BY id ASC;";
             $add_bill_select_result = mysqli_query($conn, $add_bill_select_query);
             $output .= '
                 <table class="table table-bordered">

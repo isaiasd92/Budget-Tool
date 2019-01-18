@@ -21,7 +21,7 @@
 					<td><label>'.$debt_row["company"].'</label></td>
 				</tr>
 				<tr>
-					<td class="results" ><label>Due Date</label></td>
+					<td class="results" ><label>Pay Off</label></td>
 					<td><label>'.date("m/d/Y", strtotime($debt_row["due_date"])).'</label></td>
 				</tr>
 				<tr>

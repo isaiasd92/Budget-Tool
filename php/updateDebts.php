@@ -17,14 +17,14 @@
         $update_debt_query = "UPDATE debt SET company = '$update_debt_company', due_date = '$update_debt_dueDate', amount = '$update_debt_amount', notes = '$update_debt_notes', is_paid = '$update_debt_is_paid' WHERE id = '$update_debt_id';";
         
         if(mysqli_query($conn, $update_debt_query)){
-            $update_debt_select_query = "SELECT id, company, amount, due_date, is_paid FROM debt ORDER BY id DESC;";
+            $update_debt_select_query = "SELECT id, company, amount, due_date, is_paid FROM debt ORDER BY id ASC;";
             $update_debt_select_result = mysqli_query($conn, $update_debt_select_query);
             $output .= '
                 <table class="table table-bordered">
                     <tr class="results" >
                         <th>Debt</th>
                         <th>Amount</th>
-                        <th>Due Date</th>
+                        <th>Pay Off</th>
                         <th>Paid</th>
                         <th></th>
                     </tr>';

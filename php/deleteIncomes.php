@@ -7,7 +7,7 @@
 
     if(isset($_POST["delete_income_id"])){
         $output = '';
-        $delete_income_select_query = "SELECT id, name, pay_date, amount FROM income ORDER BY id DESC";
+        $delete_income_select_query = "SELECT id, name, pay_date, amount FROM income ORDER BY id ASC";
         $delete_income_select_result = mysqli_query($conn, $delete_income_select_query);
         $total_income_rows = mysqli_num_rows($delete_income_select_result);
           

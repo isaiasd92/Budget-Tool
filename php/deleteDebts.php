@@ -7,7 +7,7 @@
 
     if(isset($_POST["delete_debt_id"])){
         $output = '';
-        $delete_debt_select_query = "SELECT id, company, amount, due_date, is_paid FROM debt ORDER BY id DESC;";
+        $delete_debt_select_query = "SELECT id, company, amount, due_date, is_paid FROM debt ORDER BY id ASC;";
         $delete_debt_select_result = mysqli_query($conn, $delete_debt_select_query);
         $total_debt_rows = mysqli_num_rows($delete_debt_select_result);
           

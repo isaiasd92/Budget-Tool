@@ -1,22 +1,16 @@
-body {
-    font-family: 'Roboto Condensed', sans-serif;
-    background-color: white;
-}
+/*
+	BOOTSTRAP COLORS
 
-#banner {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 3em;
-    color: white;
-}
+	Primary:	#007bff
+	Success:	#43a047
+*/
 
-.menuButton{
-	margin-left: 10px;
-	font-size: 20px;
-	padding: 0 10px 0 10px;
-}
+/*
+	-------------------------------------
+		NAVBAR
+	-------------------------------------
+*/
 
-/* Navbar */
 .navbar, .navbar-inverse {
 	border-radius: 0;
 	border: none;
@@ -44,20 +38,151 @@ body {
 	background-color: forestgreen;
 	transition: 0.7s all linear;
 }
-/* End Navbar */
+
+#banner {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 3em;
+    color: white;
+}
+
+.menuButton{
+	margin-left: 10px;
+	font-size: 20px;
+	padding: 0 10px 0 10px;
+}
 
 .menu-icon {
     color: white;
 }
 
+/*
+	-------------------------------------
+		TAGS
+	-------------------------------------
+*/
+
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+	background-color: white;
+	padding-right: 0 !important;
+}
+
+/*
+	-------------------------------------
+		PANELS
+	-------------------------------------
+*/
+
+.panel-default > .panel-heading {
+	background-color: #43a047;
+}
+
+.panel-title {
+	color: white;
+	font-weight: bold;
+	text-align: center;
+}
+
+.panel-group{
+	margin: 20px;
+}
+
+/*
+	-------------------------------------
+		CHART INFO
+	-------------------------------------
+*/
+
+.month-row,
+.year-row{
+	text-align: center;
+}
+
+.month-button,
+.year-button{
+	float: none;
+    margin: 5px;
+	width: 40%;
+}
+
+.month-button:hover,
+.year-button:hover{
+	background-color: #007bff;
+    color: white;
+}
+
+#date-title-link:hover{
+	text-decoration: none;
+}
+
+#date-title{
+	text-align: center;
+	font-weight: bold;
+	color: #43a047;
+}
+
+#date-title:hover{
+	color: #007bff;
+	transform: scale(1.1);
+}
+
+#bill-chart-legend-container{
+	margin: 20px;
+	border: 2px solid #007bff;
+	padding: 5px;
+}
+
+.chart-legend li span{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+}
+
+.chart-legend{
+  height:250px;
+  overflow:auto;
+}
+
+.chart-legend li{
+  cursor:pointer;
+}
+
+.strike{
+     text-decoration: line-through !important;
+}
+
+.float-left{
+  float:left;
+}
+
+/*
+	-------------------------------------
+		TABLES
+	-------------------------------------
+*/
+
 .results {
 	background-color: silver;
 }
+
+/*
+	-------------------------------------
+		CONFIRMATION POPUPS
+	-------------------------------------
+*/
 
 .confirmation {
 	width: 260px;
 	margin: auto;
 }
+
+/*
+	-------------------------------------
+		HOMEPAGE SUMMARY INFO
+	-------------------------------------
+*/
 
 .budget_column {
 	width: 50%;
@@ -68,6 +193,11 @@ body {
 	width: 50%;
 	text-align: left;
 }
+
+/*
+	-------------------------------------
+	-------------------------------------
+*/
 
 @media (min-width: 768px)
 {

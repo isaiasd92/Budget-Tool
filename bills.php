@@ -26,7 +26,11 @@
         <!-- Javascript -->
         <script src="js/bootstrap.min.js"></script>
         <script src="js/bootstrap-table.js"></script>
+        <script src="js/chart.bundle.js"></script>
         <script src="js/scripts.js"></script>
+
+        <!-- Summary Chart -->
+        <script id="thisChart"></script>
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -65,69 +69,263 @@
             </div>
         </nav>
         <!-- End Navbar -->
-        <!-- Table -->
-        <div  id="bill_table" class="table-responsive">
-            <table class="table table-bordered">
-                <tr class="results" >
-                    <th>Bill</th>
-                    <th>Amount</th>
-                    <th>Due Date</th>
-                    <th>Paid</th>
-                    <th></th>
-                </tr>
-                <?php
-                    $bill_query = "SELECT id, company, amount, due_date, is_paid FROM bills ORDER BY id DESC";
-                    $bill_result = mysqli_query($conn, $bill_query);
 
-                    while($bill_row = mysqli_fetch_array($bill_result))
-                    {
-                ?>
-                <tr id="<?php echo $bill_row["id"]; ?>">
-                    <td data-target="bill_list_company">
-                        <?php echo $bill_row["company"]; ?>
-                    </td>
-                    <td data-target="bill_list_amount">
-                        <?php echo $bill_row["amount"]; ?>
-                    </td>
-                    <td data-target="bill_list_due_date">
-                        <?php echo date("m/d/Y", strtotime($bill_row["due_date"])) ?>
-                    </td>
-                        <?php   
-                            if($bill_row["is_paid"] == 0)
-                            {
-                        ?>
-                        <td data-target="debt_list_is_paid">
-                            No
-                        </td>
-                        <?php
-                            }
-                            else
-                            {
-                        ?>
-                        <td data-target="debt_list_is_paid" style="background-color: lightgreen;">
-                            Yes
-                        </td>
-                        <?php
-                            }
-                        ?>
-                    <td>
-                        <button data-id="<?php echo $bill_row["id"]; ?>" class="menuButton view_bills btn btn-secondary">
-                            <span class="glyphicon glyphicon-info-sign"></span>
-                        </button>
-                        <button data-id="<?php echo $bill_row["id"]; ?>" class="menuButton edit_bills btn btn-warning">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        </button>
-                        <button data-id="<?php echo $bill_row["id"]; ?>" class="menuButton delete_bill btn btn-danger">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                    </td>
-                </tr>
-                <?php
-                    }
-                ?>
-            </table>
+        <!-- Bill Chart Collapse Bar -->
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                <a class="accordion-toggle" id="bill-chartButton" style="text-decoration:none" data-toggle="collapse" data-parent="#accordion" href="#collapseChart">
+                    <h4 class="panel-title">
+                        <span id="bill-icon-chartButton" class="glyphicon glyphicon-plus"></span>
+                        Chart
+                    </h4>
+                </a>
+                </div>
+                <div id="collapseChart" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        
+                        <!-- Date Selector Title -->
+                        <div class="row">
+                            <a id="date-title-link">
+                                <h1 id="date-title"></h1>
+                            </a>
+                        </div>
+                        <!-- End Date Selector Title -->
+
+                        <!-- Year Selector -->
+                        <div id="bill-years" class="container-fluid">
+                            <div class="row year-row">
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <button class="btn year-button" value="2019">
+                                            2019
+                                        </button>
+                                        <button class="btn year-button" value="2020">
+                                            2020
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <button class="btn year-button" value="2021">
+                                            2021
+                                        </button>
+                                        <button class="btn year-button" value="2022">
+                                            2022
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <button class="btn year-button" value="2023">
+                                            2023
+                                        </button>
+                                        <button class="btn year-button" value="2024">
+                                            2024
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row year-row">
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <button class="btn year-button" value="2025">
+                                            2025
+                                        </button>
+                                        <button class="btn year-button" value="2026">
+                                            2026
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <button class="btn year-button" value="2027">
+                                            2027
+                                        </button>
+                                        <button class="btn year-button" value="2028">
+                                            2028
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <button class="btn year-button" value="2029">
+                                            2029
+                                        </button>
+                                        <button class="btn year-button" value="2030">
+                                            2030
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Year Selector -->
+
+                        <!-- Month Selector -->
+                        <div id="bill-months" class="container-fluid hide">
+                            <div class="row month-row">
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <button class="btn month-button" value="1">
+                                            Jan
+                                        </button>
+                                        <button class="btn month-button" value="2">
+                                            Feb
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <button class="btn month-button" value="3">
+                                            Mar
+                                        </button>
+                                        <button class="btn month-button" value="4">
+                                            Apr
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <button class="btn month-button" value="5">
+                                            May
+                                        </button>
+                                        <button class="btn month-button" value="6">
+                                            Jun
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row month-row">
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <button class="btn month-button" value="7">
+                                            Jul
+                                        </button>
+                                        <button class="btn month-button" value="8">
+                                            Aug
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <button class="btn month-button" value="9">
+                                            Sep
+                                        </button>
+                                        <button class="btn month-button" value="10">
+                                            Oct
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <button class="btn month-button" value="11">
+                                            Nov
+                                        </button>
+                                        <button class="btn month-button" value="12">
+                                            Dec
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Month Selector -->
+
+                        <!-- Chart Legend -->
+                        <div id="bill-chart-legend-container" class="row hide">
+                            <div id="bill-chart-legend" class="chart-legend"></div>
+                        </div>
+                        <!-- End Chart Legend -->
+                        
+                        <!-- Chart -->
+                        <canvas id="myDoughnutChart" width="100%" height="100%"></canvas>
+                        <!-- End Chart -->
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- End Table -->
+        <!-- End Bill Chart Collapse Bar -->
+
+        <!-- Bill Collapse Bar -->
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                <a class="accordion-toggle" id="bill-tableButton" style="text-decoration:none" data-toggle="collapse" data-parent="#accordion" href="#collapseBill">
+                    <h4 class="panel-title">
+                        <span id="bill-icon-tableButton" class="glyphicon glyphicon-plus"></span>
+                        Table
+                    </h4>
+                </a>
+                </div>
+                <div id="collapseBill" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <!-- Table -->
+                        <div  id="bill_table" class="table-responsive">
+                            <table class="table table-bordered">
+                                <tr class="results" >
+                                    <th>Bill</th>
+                                    <th>Amount</th>
+                                    <th>Due Date</th>
+                                    <th>Paid</th>
+                                    <th></th>
+                                </tr>
+                                <?php
+                                    $bill_query = "SELECT id, company, amount, due_date, is_paid FROM bills ORDER BY id ASC";
+                                    $bill_result = mysqli_query($conn, $bill_query);
+
+                                    while($bill_row = mysqli_fetch_array($bill_result))
+                                    {
+                                ?>
+                                <tr id="<?php echo $bill_row["id"]; ?>">
+                                    <td data-target="bill_list_company">
+                                        <?php echo $bill_row["company"]; ?>
+                                    </td>
+                                    <td data-target="bill_list_amount">
+                                        <?php echo $bill_row["amount"]; ?>
+                                    </td>
+                                    <td data-target="bill_list_due_date">
+                                        <?php echo date("m/d/Y", strtotime($bill_row["due_date"])) ?>
+                                    </td>
+                                        <?php   
+                                            if($bill_row["is_paid"] == 0)
+                                            {
+                                        ?>
+                                        <td data-target="debt_list_is_paid">
+                                            No
+                                        </td>
+                                        <?php
+                                            }
+                                            else
+                                            {
+                                        ?>
+                                        <td data-target="debt_list_is_paid" style="background-color: lightgreen;">
+                                            Yes
+                                        </td>
+                                        <?php
+                                            }
+                                        ?>
+                                    <td>
+                                        <button data-id="<?php echo $bill_row["id"]; ?>" class="menuButton view_bills btn btn-secondary">
+                                            <span class="glyphicon glyphicon-info-sign"></span>
+                                        </button>
+                                        <button data-id="<?php echo $bill_row["id"]; ?>" class="menuButton edit_bills btn btn-warning">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
+                                        <button data-id="<?php echo $bill_row["id"]; ?>" class="menuButton delete_bill btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <?php
+                                    }
+                                ?>
+                            </table>
+                        </div>
+                        <!-- End Table -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Bill Collapse Bar -->
         <button id="addNew" class="menuButton btn btn-primary" data-toggle="modal" data-target="#add_bill_modal">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
@@ -211,7 +409,7 @@
                         </div>
                     </div>
                     <br />
-                    <button type="button" name="insert" id="insert_bill" class="btn btn-success">insert</button>
+                    <button type="button" name="insert" id="insert_bill" class="btn btn-success">Insert</button>
                 </form>
             </div>
         </div>

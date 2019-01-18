@@ -14,7 +14,7 @@
         $add_income_query = "INSERT INTO income(name, pay_date, amount) VALUES('$add_income_name', '$add_income_payDate', '$add_income_amount'); ";
 
         if(mysqli_query($conn, $add_income_query)){
-            $add_income_select_query = "SELECT id, name, amount, pay_date FROM income ORDER BY id DESC;";
+            $add_income_select_query = "SELECT id, name, amount, pay_date FROM income ORDER BY id ASC;";
             $add_income_select_result = mysqli_query($conn, $add_income_select_query);
             $output .= '
                 <table class="table table-bordered">

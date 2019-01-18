@@ -73,12 +73,12 @@
                 <tr class="results" >
                     <th>Debt</th>
                     <th>Amount</th>
-                    <th>Due Date</th>
+                    <th>Pay Off</th>
                     <th>Paid</th>
                     <th></th>
                 </tr>
                 <?php
-                    $debt_query = "SELECT id, company, amount, due_date, is_paid FROM debt ORDER BY id DESC";
+                    $debt_query = "SELECT id, company, amount, due_date, is_paid FROM debt ORDER BY id ASC";
                     $debt_result = mysqli_query($conn, $debt_query);
 
                     while($debt_row = mysqli_fetch_array($debt_result))
@@ -172,7 +172,7 @@
                     </div>
                     <br />
                     <label>
-                        Due Date
+                        Pay Off
                     </label>
                     <div class="input-group date" data-provide="datepicker">
                         <div class="input-group-addon">
@@ -213,7 +213,7 @@
                         </div>
                     </div>
                     <br />
-                    <button type="button" name="insert" id="insert_debt" class="btn btn-success">insert</button>
+                    <button type="button" name="insert" id="insert_debt" class="btn btn-success">Insert</button>
                 </form>
             </div>
         </div>

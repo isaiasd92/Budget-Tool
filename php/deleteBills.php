@@ -7,7 +7,7 @@
 
     if(isset($_POST["delete_bill_id"])){
         $output = '';
-        $delete_bill_select_query = "SELECT id, company, amount, due_date, is_paid FROM bills ORDER BY id DESC;";
+        $delete_bill_select_query = "SELECT id, company, amount, due_date, is_paid FROM bills ORDER BY id ASC;";
         $delete_bill_select_result = mysqli_query($conn, $delete_bill_select_query);
         $total_bill_rows = mysqli_num_rows($delete_bill_select_result);
           

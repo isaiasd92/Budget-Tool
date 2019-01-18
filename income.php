@@ -75,7 +75,7 @@
                     <th></th>
                 </tr>
                 <?php
-                    $income_query = "SELECT id, name, pay_date, amount FROM income ORDER BY id DESC";
+                    $income_query = "SELECT id, name, pay_date, amount FROM income ORDER BY id ASC";
                     $income_result = mysqli_query($conn, $income_query);
 
                     while($income_row = mysqli_fetch_array($income_result))
@@ -170,7 +170,7 @@
                         <input type="text" id="income_add_amount" class="form-control" />
                     </div>
                     <br />
-                    <button type="button" name="insert" id="insert_income" class="btn btn-success">insert</button>
+                    <button type="button" name="insert" id="insert_income" class="btn btn-success">Insert</button>
                 </form>
             </div>
         </div>

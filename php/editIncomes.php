@@ -56,7 +56,7 @@
                 </div>
                 <br />
                 <div class="input-group">
-                    <button type="button" name="update" id="update_income" class="btn btn-success">update</button>
+                    <button type="button" name="update" id="update_income" class="btn btn-success">Update</button>
                 </div>
             </form> ';
         }
