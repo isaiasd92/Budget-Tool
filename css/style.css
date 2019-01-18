@@ -127,6 +127,10 @@ body {
 	transform: scale(1.1);
 }
 
+#bill-chart-legend-button{
+	text-align: right;
+}
+
 #bill-chart-legend-container{
 	margin: 20px;
 	border: 2px solid #007bff;
@@ -150,7 +154,8 @@ body {
 }
 
 .strike{
-     text-decoration: line-through !important;
+	background-color: darkred;
+    color: white;
 }
 
 .float-left{

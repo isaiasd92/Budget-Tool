@@ -149,6 +149,7 @@ $(document).ready(function(){
         });
     });
 
+    // Resets the month and date selection
     $(document).on('click', '#date-title-link', function(){
         $("#bill-months").addClass("hide");
         $("#bill-years").removeClass("hide");
@@ -199,8 +200,11 @@ $(document).ready(function(){
                     bill_year: bill_year
             },
             success: function(data){
-                $('#thisChart').html(data);
+                $("#thisChart").html(data);
                 $("#bill-chart-legend-container").removeClass("hide");
+                $("#bill-chart-legend-button").removeClass("hide");
+                $("#bill-chart-legend-container ul").addClass("list-group");
+                $("#bill-chart-legend-container ul li").addClass("list-group-item");
             }
         });
     });

@@ -231,8 +231,15 @@
                         <!-- End Month Selector -->
 
                         <!-- Chart Legend -->
-                        <div id="bill-chart-legend-container" class="row hide">
-                            <div id="bill-chart-legend" class="chart-legend"></div>
+                        <div id="bill-chart-legend-button" class="dropdown hide">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="bill-chart-legend_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dropdown
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div id="bill-chart-legend-container" class="dropdown-item row">
+                                    <div id="bill-chart-legend" class="chart-legend"></div>
+                                </div>
+                            </div>
                         </div>
                         <!-- End Chart Legend -->
                         
