@@ -152,20 +152,24 @@ $(document).ready(function(){
     // Resets the month and date selection
     $(document).on('click', '#date-title-link', function(){
         $("#bill-months").addClass("hide");
+        $("#bill-chart-legend-button").addClass("hide");
         $("#bill-years").removeClass("hide");
         $("#date-title").html("");
+        $("#bill-chart-failure").addClass("hide");
+        $("canvas#myDoughnutChart").remove();
+        $("div.chartjs-size-monitor").remove();
     });
 
-    // bills Chart Legend click event
+    // Bills Chart Legend click event
     $(document).on('click', '#bill-chart-legend > ul > li', function(e){
-            var index = $(this).index();
-            $(this).toggleClass("strike")
-            var ci = e.view.myChart;
-            console.log(index)
-            console.log();
-            var curr = ci.data.datasets[0]._meta[0].data[index];
-            curr.hidden = !curr.hidden
-            ci.update();
+        var index = $(this).index();
+        $(this).toggleClass("strike")
+        var ci = e.view.myBillChart;
+        console.log(index)
+        console.log();
+        var curr = ci.data.datasets[0]._meta[0].data[index];
+        curr.hidden = !curr.hidden
+        ci.update();
     })
 
     // Converts the month number to the month name
@@ -200,11 +204,25 @@ $(document).ready(function(){
                     bill_year: bill_year
             },
             success: function(data){
-                $("#thisChart").html(data);
-                $("#bill-chart-legend-container").removeClass("hide");
-                $("#bill-chart-legend-button").removeClass("hide");
-                $("#bill-chart-legend-container ul").addClass("list-group");
-                $("#bill-chart-legend-container ul li").addClass("list-group-item");
+                if(data == "Fail"){
+                    $("#bill-chart-failure").removeClass("hide");
+                    $("canvas#myDoughnutChart").remove();
+                    $("#thisChart").remove();
+
+                    var script   = document.createElement("script");
+                    script.setAttribute('id', 'thisChart');
+                    script.type  = "text/javascript";
+                    document.body.appendChild(script);
+                }
+                else{
+                    $("canvas#myDoughnutChart").remove();
+                    $("div.doughnut-chart").append('<canvas id="myDoughnutChart" width="100%" height="100%"></canvas>');
+                    $("#thisChart").html(data);
+                    $("#bill-chart-legend-container").removeClass("hide");
+                    $("#bill-chart-legend-button").removeClass("hide");
+                    $("#bill-chart-legend-container ul").addClass("list-group");
+                    $("#bill-chart-legend-container ul li").addClass("list-group-item");
+                }
             }
         });
     });

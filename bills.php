@@ -92,6 +92,14 @@
                         </div>
                         <!-- End Date Selector Title -->
 
+                        <!-- Failure Message -->
+                        <div id="bill-chart-failure" class="row hide">
+                            <h1>
+                                No Data Available! Please Try Another Date
+                            </h1>
+                        </div>
+                        <!-- End Failure Message -->
+
                         <!-- Year Selector -->
                         <div id="bill-years" class="container-fluid">
                             <div class="row year-row">
@@ -232,8 +240,8 @@
 
                         <!-- Chart Legend -->
                         <div id="bill-chart-legend-button" class="dropdown hide">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="bill-chart-legend_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
+                            <button class="btn dropdown-toggle" type="button" id="bill-chart-legend_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon glyphicon-list"></span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <div id="bill-chart-legend-container" class="dropdown-item row">
@@ -244,7 +252,9 @@
                         <!-- End Chart Legend -->
                         
                         <!-- Chart -->
-                        <canvas id="myDoughnutChart" width="100%" height="100%"></canvas>
+                        <div class="doughnut-chart">
+                            <canvas id="myDoughnutChart" width="100%" height="100%"></canvas>
+                        </div>
                         <!-- End Chart -->
                     </div>
                 </div>

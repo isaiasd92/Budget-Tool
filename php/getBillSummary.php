@@ -29,7 +29,7 @@
         }
         
         $output .= 
-                'var myChart = new Chart(document.getElementById("myDoughnutChart").getContext("2d"), {
+                'var myBillChart = new Chart(document.getElementById("myDoughnutChart").getContext("2d"), {
                     type: "doughnut",
                     data: {
                         labels:
@@ -92,9 +92,13 @@
                         }
                     }
                 });
-                document.getElementById("bill-chart-legend").innerHTML = myChart.generateLegend();
+                document.getElementById("bill-chart-legend").innerHTML = myBillChart.generateLegend();
             ';
         
+        if($get_bill_date_company_results_count < 1){
+            $output = "Fail";
+        }
+
         echo $output;
     }
 ?>

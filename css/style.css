@@ -131,10 +131,27 @@ body {
 	text-align: right;
 }
 
+#bill-chart-legend_dropdown{
+	width: 50px;
+	height: 40px;
+	background-color: #007bff;
+	color: white;
+}
+
 #bill-chart-legend-container{
-	margin: 20px;
-	border: 2px solid #007bff;
-	padding: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#bill-chart-failure{
+	text-align: center;
+	color: red;
+}
+
+.dropdown-menu{
+	background-color: #007bff;
 }
 
 .chart-legend li span{
@@ -160,6 +177,10 @@ body {
 
 .float-left{
   float:left;
+}
+
+.doughnut-chart{
+	display: block;
 }
 
 /*
