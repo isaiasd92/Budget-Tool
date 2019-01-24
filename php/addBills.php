@@ -72,4 +72,6 @@
         }
         echo $output;
     }
+
+    mysqli_close($conn); 
 ?>

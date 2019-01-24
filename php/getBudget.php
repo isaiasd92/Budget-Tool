@@ -3,57 +3,78 @@
 	This script gets the budget info and outputs the data in index.php
 */
 
-	include 'db.php';
-
-	if(isset($_POST['from_date'])){
+    include 'db.php';
+    
+    if(isset($_POST['currentMonth'])){
         $output = '';
-        $budget_from_date = $_POST["from_date"];
-        $budget_through_date = $_POST["through_date"];
+        $budget_month = $_POST["currentMonth"];
+        $budget_year = $_POST["currentYear"];
 
-        $get_budget_bill_date_range = "SELECT SUM(amount) AS bill_amount_sum FROM bills WHERE due_date BETWEEN '$budget_from_date' AND '$budget_through_date';";
-        $get_budget_income_date_range = "SELECT SUM(amount) AS income_amount_sum FROM income WHERE pay_date BETWEEN '$budget_from_date' AND '$budget_through_date';";
-        
-        $budget_bill_result = mysqli_query($conn, $get_budget_bill_date_range);
-        $budget_income_result = mysqli_query($conn, $get_budget_income_date_range);
-        
-        while($budget_bill_row = mysqli_fetch_array($budget_bill_result))
-        {
-            $budget_bill_total = $budget_bill_row["bill_amount_sum"];
-        }
-        while($budget_income_row = mysqli_fetch_array($budget_income_result))
-        {
-            $budget_income_total = $budget_income_row["income_amount_sum"];
-        }
+        $get_month_bill_total = "SELECT SUM(amount) as bill_total FROM bills WHERE MONTH(due_date) = ".$budget_month." AND YEAR(due_date) = ".$budget_year.";";
+        $get_month_income_total = "SELECT SUM(amount) as income_total FROM income WHERE MONTH(pay_date) = ".$budget_month." AND YEAR(pay_date) = ".$budget_year.";";
 
-        $budget_balance = $budget_income_total - $budget_bill_total;
+        $get_month_bill_total_results = mysqli_query($conn, $get_month_bill_total);
+        $get_month_income_total_results = mysqli_query($conn, $get_month_income_total);
+
+        $get_month_bill_total_results_count = mysqli_num_rows($get_month_bill_total_results);
+        $get_month_income_total_results_count = mysqli_num_rows($get_month_income_total_results);
+
+        if($get_month_bill_total_results_count > 0){
+            while($get_month_bill_total_row = mysqli_fetch_array($get_month_bill_total_results))
+            {
+                $budget_total_bills_val = $get_month_bill_total_row['bill_total'];
+            }            
+            while($get_month_income_total_row = mysqli_fetch_array($get_month_income_total_results))
+            {
+                $budget_total_income_val = $get_month_income_total_row['income_total'];
+            }
+
+            $get_month_leftovers = $budget_total_income_val - $budget_total_bills_val;
+
+            if($get_month_leftovers < 0){
+                $get_month_leftovers = 0;
+            }
+        }
 
         $output .= '
-        <tr class="alert-danger">
-            <td class="budget_column">
-                <h1>Total Due</h1>
-            </td>
-            <td class="budget_column_amount">
-                <h1><b>$ '.number_format($budget_bill_total, 2, '.','').'</b></h1>
-            </td>
-        </tr>
-        <tr class="alert-success">
-            <td class="budget_column">
-                <h1>Total Income</h1>
-            </td>
-            <td class="budget_column_amount">
-                <h1><b>$ '.number_format($budget_income_total, 2, '.','').'</b></h1>
-            </td>
-        </tr>
-        <tr class="alert-info">
-            <td class="budget_column">
-                <h1>Balance</h1>
-            </td>
-            <td class="budget_column_amount">
-                <h1><b>$ '.number_format($budget_balance, 2, '.','').'</b></h1>
-            </td>
-        </tr>
-        ';
+            var myBudgetChart = new Chart(document.getElementById("myBudgetChart").getContext("2d"), {
+                type: "doughnut",
+                data: {
+                    labels:
+                        [
+                            "Bills", "Left Overs"
+                        ],
+                        datasets: [
+                        {
+                            backgroundColor: 
+                                [
+                                    "#dc3545", "#43a047"
+                                ],
+                            data: 
+                                ['.number_format($budget_total_bills_val, 2, '.','').','.number_format($get_month_leftovers, 2, '.','').']
+                        }
+                    ]
+                },
+                options: {
+                    segmentShowStroke : true,
+                    segmentStrokeColor : "#fff",
+                    segmentStrokeWidth : 2,
+                    percentageInnerCutout : 50,
+                    animationSteps : 100,
+                    animationEasing : "easeOutBounce",
+                    animateRotate : true,
+                    animateScale : false,
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    showScale: true,
+                    animateScale: true,
+                    legend: {
+                        display:true
+                    }
+                }
+            });';
 
         echo $output;
     }
+    mysqli_close($conn); 
 ?>

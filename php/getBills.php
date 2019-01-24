@@ -51,4 +51,5 @@
 		$output .= '</table></div>';
 		echo $output;
 	}
+	mysqli_close($conn); 
 ?>
