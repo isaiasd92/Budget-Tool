@@ -55,6 +55,9 @@
                         }
                         $output .= '
                         <td>
+                            <button data-id="'.$add_debt_select_row["id"].'" class="menuButton pay_debts btn btn-success">
+                                <span class="glyphicon glyphicon-usd"></span>
+                            </button>
                             <button data-id="'.$add_debt_select_row["id"].'" class="menuButton view_debts btn btn-secondary">
                                 <span class="glyphicon glyphicon-info-sign"></span>
                             </button>
