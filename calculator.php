@@ -1,6 +1,7 @@
 <?php 
     include 'php/db.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -18,7 +19,8 @@
         <link href="css/style.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet">
         <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-
+        <link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>
+        
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
@@ -50,6 +52,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
                 </div>
     
@@ -61,6 +64,7 @@
                         <li><a href="income.php"><span class="menu-icon glyphicon glyphicon-usd"></span> Income</a></li>
                         <li><a href="debt.php"><span class="menu-icon glyphicon glyphicon-alert"></span> Debt</a></li>
                         <li><a href="calculator.php"><span class="menu-icon glyphicon glyphicon-phone"></span> Calculator</a></li>
+                        <li><a href="settings.php"><span class="menu-icon glyphicon glyphicon-cog"></span> Settings</a></li>
                     </ul>
                 </div>
             </div>
@@ -147,3 +151,6 @@
         <!-- End Calculator -->
     </body>
 </html>
+
+<!-- Close MySQL Connection -->
+<?php mysqli_close($conn); ?>

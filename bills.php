@@ -18,6 +18,7 @@
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet">
+        <link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>
 
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -53,6 +54,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
                 </div>
     
@@ -64,6 +66,7 @@
                         <li><a href="income.php"><span class="menu-icon glyphicon glyphicon-usd"></span> Income</a></li>
                         <li><a href="debt.php"><span class="menu-icon glyphicon glyphicon-alert"></span> Debt</a></li>
                         <li><a href="calculator.php"><span class="menu-icon glyphicon glyphicon-phone"></span> Calculator</a></li>
+                        <li><a href="settings.php"><span class="menu-icon glyphicon glyphicon-cog"></span> Settings</a></li>
                     </ul>
                 </div>
             </div>
@@ -343,6 +346,7 @@
             </div>
         </div>
         <!-- End Bill Collapse Bar -->
+        
         <button id="addNew" class="menuButton btn btn-primary" data-toggle="modal" data-target="#add_bill_modal">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
@@ -499,3 +503,6 @@
     </div>
 </div>
 <!-- End Bill Updated Popup -->
+
+<!-- Close MySQL Connection -->
+<?php mysqli_close($conn); ?>

@@ -3,6 +3,7 @@
 
 	Primary:	#007bff
 	Success:	#43a047
+	Danger:		#dc3545
 */
 
 /*
@@ -103,7 +104,7 @@ body {
 .year-button{
 	float: none;
     margin: 5px;
-	width: 40%;
+	width: 70%;
 }
 
 .month-button:hover,
@@ -222,6 +223,38 @@ body {
 
 /*
 	-------------------------------------
+		SETTINGS
+	-------------------------------------
+*/
+
+#settings-container{
+	width: 100%;
+	margin: 0;
+}
+
+#settings-day-container{
+	margin-left: 25%;
+    margin-right: 25%;
+}
+
+#settings-auto-update{
+	margin: 20px;
+}
+
+#update_settings{
+	width: 150px;
+    height: 50px;
+	font-size: 20px;
+	margin-top: 50px;
+}
+
+.settings-option{
+	margin: 20px;
+}
+
+/*
+	-------------------------------------
+		
 	-------------------------------------
 */
 

@@ -67,6 +67,9 @@
                         }
                         $output .= '
                         <td>
+                            <button data-id="'.$payment_update_debt_select_row["id"].'" class="menuButton view_debts_payments btn btn-primary">
+                                <span class="glyphicon glyphicon-list-alt"></span>
+                            </button>
                             <button data-id="'.$payment_update_debt_select_row["id"].'" class="menuButton pay_debts btn btn-success">
                                 <span class="glyphicon glyphicon-usd"></span>
                             </button>

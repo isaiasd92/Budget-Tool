@@ -4,19 +4,21 @@ $(document).ready(function(){
     //                  HOME
     // ##############################################
 
-     // View Budget Info In Date Range
-     $(document).on('click', '#date_range', function(){
-        var from_date = $('#from_date').val();
-        var through_date = $('#through_date').val();
+    // View Budget Info for the Month
+    $(document).ready(function(){
+        var today = new Date();
+        var currentMonth = today.getMonth() + 1;
+        var currentYear = today.getFullYear();
+
         $.ajax({
             url:"/php/getBudget.php",
             method:"POST",
             data:{
-                    from_date : from_date,
-                    through_date : through_date
+                currentMonth : currentMonth,
+                currentYear : currentYear
                  },
             success: function(data){
-                $('#budget_table').html(data);
+                $('#thisBudgetChart').html(data);
             }
         });
     });
@@ -24,6 +26,23 @@ $(document).ready(function(){
     // ##############################################
     //                  BILLS
     // ##############################################
+
+    // Automatically Update Bills
+    $(document).ready(function(){
+        var todayDate = new Date();
+        var billMonth = todayDate.getMonth() + 1;
+
+        $.ajax({
+            url:"/php/autoUpdate.php",
+            method:"POST",
+            data:{
+                billMonth : billMonth
+                 },
+            success: function(data){
+                console.log(data);
+            }
+        });
+    });
 
     // View Bill Info
     $(document).on('click', '.view_bills', function(){
@@ -158,6 +177,13 @@ $(document).ready(function(){
         $("#bill-chart-failure").addClass("hide");
         $("canvas#myDoughnutChart").remove();
         $("div.chartjs-size-monitor").remove();
+        $("div.doughnut-chart").append('<canvas id="myDoughnutChart" width="100%" height="100%"></canvas>');
+        $("#thisChart").remove();
+
+        var script   = document.createElement("script");
+        script.setAttribute('id', 'thisChart');
+        script.type  = "text/javascript";
+        document.body.appendChild(script);
     });
 
     // Bills Chart Legend click event
@@ -438,7 +464,6 @@ $(document).ready(function(){
             $('#debt_add_amount').attr('style','border-color: red; border-width: 2px; color: red;');
         }
     });
-    // End Add Debt
 
     // Edit Debt
     $(document).on('click', '.edit_debts', function(){
@@ -450,6 +475,54 @@ $(document).ready(function(){
             success: function(data) {
                 $('#debt_edit').html(data);
                 $('#edit_debt_modal').modal('show');
+            }
+        });
+    });
+
+    // Pay Debt
+    $(document).on('click', '.pay_debts', function(){
+        var pay_debt_id = $(this).data("id");
+        $.ajax({
+            url: "/php/payDebts.php",
+            method: "POST",
+            data:{pay_debt_id: pay_debt_id},
+            success: function(data) {
+                $('#debt_payment').html(data);
+                $('#pay_debt_modal').modal('show');
+            }
+        });
+    });
+
+    // Debt Payment
+    $(document).on('click', "#update_debt_payment", function(){
+        var pay_debt_id = $('#pay_debt_id').val(); 
+        var pay_debt_amount = $('#pay_debt_amount').val();
+
+        $.ajax({
+            url     : '/php/debtPayment.php',
+            method  : 'POST', 
+            data    : {
+                    pay_debt_id: pay_debt_id,
+                    pay_debt_amount : pay_debt_amount
+            },
+            success  : function(data){
+                $('#pay_debt_modal').modal('hide');
+                $('#debt_payment_modal').modal('show');
+                $('#debt_table').html(data);
+            }
+        });
+    });
+
+    // View Debt Payments
+    $(document).on('click', ".view_debts_payments", function(){
+        var view_payment_id = $(this).data("id");
+        $.ajax({
+            url: "/php/getDebtsPayments.php",
+            method: "POST",
+            data:{view_payment_id: view_payment_id},
+            success: function(data) {
+                $('#debt_payment').html(data);
+                $('#view_payment_debt_modal').modal('show');
             }
         });
     });
@@ -521,11 +594,52 @@ $(document).ready(function(){
         $('#debt_add_amount').attr('style','border-color: default; border-width: default; color: default;').val('');
     });
 
+    // ##############################################
+    //                  SETTINGS
+    // ##############################################
+
+    // Update Settings Button Click
+    $(document).on('click', "#update_settings", function(){
+        if($('#edit_auto_update_yes_label').hasClass('active'))
+        {
+            var settings_auto_update = $('#edit_auto_update_yes').val();
+        }
+        else if($('#edit_auto_update_no_label').hasClass('active'))
+        {
+            var settings_auto_update = $('#edit_auto_update_no').val();
+        }
+
+        if($('#edit_send_emails_yes_label').hasClass('active'))
+        {
+            var settings_send_emails = $('#edit_send_emails_yes').val();
+        }
+        else if($('#edit_send_emails_no_label').hasClass('active'))
+        {
+            var settings_send_emails = $('#edit_send_emails_no').val();
+        }
+
+        var settings_day = $('#settings_day').val();
+
+        $.ajax({
+            url     : '/php/updateSettings.php',
+            method  : 'POST', 
+            data    : {
+                    settings_auto_update : settings_auto_update,
+                    settings_send_emails : settings_send_emails,
+                    settings_day : settings_day
+            },
+            success  : function(data){
+                $("#settings-container").html(data);
+                $("#settings_updated").modal('show');
+            }
+        });
+    });
+
     // Menu Collapse Icon Changer
     $('.collapse').on('shown.bs.collapse', function(){
         $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
         }).on('hidden.bs.collapse', function(){
-        $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+            $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
     });
 
     // Add Due Date Defaults

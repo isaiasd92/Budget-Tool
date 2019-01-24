@@ -1,6 +1,7 @@
 <?php 
     include 'php/db.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,7 +18,8 @@
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet">
-
+        <link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>
+        
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
@@ -25,7 +27,11 @@
         <!-- Javascript -->
         <script src="js/bootstrap.min.js"></script>
         <script src="js/bootstrap-table.js"></script>
+        <script src="js/chart.bundle.js"></script>
         <script src="js/scripts.js"></script>
+
+        <!-- Summary Chart -->
+        <script id="thisBudgetChart"></script>
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -47,6 +53,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
                 </div>
     
@@ -58,48 +65,30 @@
                         <li><a href="income.php"><span class="menu-icon glyphicon glyphicon-usd"></span> Income</a></li>
                         <li><a href="debt.php"><span class="menu-icon glyphicon glyphicon-alert"></span> Debt</a></li>
                         <li><a href="calculator.php"><span class="menu-icon glyphicon glyphicon-phone"></span> Calculator</a></li>
+                        <li><a href="settings.php"><span class="menu-icon glyphicon glyphicon-cog"></span> Settings</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- End Navbar -->
+
         <!-- Date Range -->
-        <table class="table">
-            <tbody>
-                <tr>
-                    <td>
-                        <label>
-                            From Date
-                        </label>
-                        <div class="input-group date" data-provide="datepicker">
-                            <div class="input-group-addon">
-                                <span id="bill_add_calendar" class="glyphicon glyphicon-th"></span>
-                            </div>
-                            <input type="text" id="from_date" class="form-control">
-                        </div>
-                    </td>
-                    <td>
-                        <label>
-                            Through Date
-                        </label>
-                        <div class="input-group date" data-provide="datepicker">
-                            <div class="input-group-addon">
-                                <span id="bill_add_calendar" class="glyphicon glyphicon-th"></span>
-                            </div>
-                            <input type="text" id="through_date" class="form-control">
-                        </div>
-                    </td>
-                    <td>
-                        <br/>
-                        <button type="button" id="date_range" class="btn btn-primary">Go</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="budget-summary-title" class="row text-center">
+            <h1>
+                This Month's Summary
+            </h1>
+
+            <!-- Chart -->
+            <div class="doughnut-chart">
+                <canvas id="myBudgetChart" width="100%" height="100%"></canvas>
+            </div>
+            <!-- End Chart -->
+            
+        </div>
         <!-- End Date Range -->
-        <!-- Budget Info -->
-        <table  id="budget_table" class="table">
-        </table>
-        <!-- End Budget Info -->
+        
     </body>
 </html>
+
+<!-- Close MySQL Connection -->
+<?php mysqli_close($conn); ?>
