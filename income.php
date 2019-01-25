@@ -247,5 +247,21 @@
 </div>
 <!-- End Income Updated Popup -->
 
+<!-- Delete Confirmation Popup -->
+<div id="income_delete_confirmation" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content confirmation">
+            <div class="modal-header" style="text-align: center; font-size: 30px;">
+                <label> Are You Sure You Want to Delete This? </label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success yes_button glyphicon glyphicon-ok" id="income_delete_confirmation_yes" value="1"></button>
+                <button type="button" class="btn btn-danger no_button btn btn-danger glyphicon glyphicon-remove" id="income_delete_confirmation_no" value="0"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Delete Confirmation Popup -->
+
 <!-- Close MySQL Connection -->
 <?php mysqli_close($conn); ?>

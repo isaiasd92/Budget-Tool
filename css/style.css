@@ -162,6 +162,10 @@ body {
     margin-right: 5px;
 }
 
+.payment-header-row{
+	background-color: darkgray;
+}
+
 .chart-legend{
   height:250px;
   overflow:auto;
@@ -203,6 +207,25 @@ body {
 .confirmation {
 	width: 260px;
 	margin: auto;
+}
+
+#debts_delete_confirmation_yes,
+#bills_delete_confirmation_yes,
+#income_delete_confirmation_yes{
+	float: left;
+	width: 45%;
+}
+
+#debts_delete_confirmation_no,
+#bills_delete_confirmation_no,
+#income_delete_confirmation_no{
+	float: right;
+	width: 45%;
+	margin-left: 0px !important;
+}
+
+.datepicker{
+	background-color: lightgray;
 }
 
 /*

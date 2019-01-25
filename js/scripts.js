@@ -156,15 +156,25 @@ $(document).ready(function(){
 
     // Delete Bill
     $(document).on('click', '.delete_bill', function(){
+        $("#bills_delete_confirmation").modal('show');
         var delete_bill_id = $(this).data("id");
-        $.ajax({
-            url:"/php/deleteBills.php",
-            method:"POST",
-            data:{delete_bill_id: delete_bill_id},
-            success: function(data){
-                $('#bill_removed').modal('show');
-                $('#bill_table').html(data);
-            }
+
+        // Delete Bills Confirmed
+        $("#bills_delete_confirmation_yes").click(function(){
+            $("#bills_delete_confirmation").modal('hide');
+            $.ajax({
+                url:"/php/deleteBills.php",
+                method:"POST",
+                data:{delete_bill_id: delete_bill_id},
+                success: function(data){
+                    $('#bill_removed').modal('show');
+                    $('#bill_table').html(data);
+                }
+            });
+        });
+
+        $("#bills_delete_confirmation_no").click(function(){
+            $("#bills_delete_confirmation").modal('hide');
         });
     });
 
@@ -372,15 +382,25 @@ $(document).ready(function(){
 
     // Delete Income
     $(document).on('click', '.delete_income', function(){
+        $("#income_delete_confirmation").modal('show');
         var delete_income_id = $(this).data("id");
-        $.ajax({
-            url:"/php/deleteIncomes.php",
-            method:"POST",
-            data:{delete_income_id: delete_income_id},
-            success: function(data){
-                $('#income_removed').modal('show');
-                $('#income_table').html(data);
-            }
+
+        // Delete Income Confirmed
+        $("#income_delete_confirmation_yes").click(function(){
+            $("#income_delete_confirmation").modal('hide');
+            $.ajax({
+                url:"/php/deleteIncomes.php",
+                method:"POST",
+                data:{delete_income_id: delete_income_id},
+                success: function(data){
+                    $('#income_removed').modal('show');
+                    $('#income_table').html(data);
+                }
+            });
+        });
+
+        $("#income_delete_confirmation_no").click(function(){
+            $("#income_delete_confirmation").modal('hide');
         });
     });
 
@@ -517,12 +537,12 @@ $(document).ready(function(){
     $(document).on('click', ".view_debts_payments", function(){
         var view_payment_id = $(this).data("id");
         $.ajax({
-            url: "/php/getDebtsPayments.php",
+            url: "/php/getDebtPayments.php",
             method: "POST",
             data:{view_payment_id: view_payment_id},
             success: function(data) {
-                $('#debt_payment').html(data);
-                $('#view_payment_debt_modal').modal('show');
+                $('#view_debt_payment_content').html(data);
+                $('#view_debt_payment_modal').modal('show');
             }
         });
     });
@@ -565,15 +585,26 @@ $(document).ready(function(){
 
     // Delete Debt
     $(document).on('click', '.delete_debt', function(){
+        $("#debts_delete_confirmation").modal('show');
         var delete_debt_id = $(this).data("id");
-        $.ajax({
-            url:"/php/deleteDebts.php",
-            method:"POST",
-            data:{delete_debt_id: delete_debt_id},
-            success: function(data){
-                $('#debt_removed').modal('show');
-                $('#debt_table').html(data);
-            }
+
+        // Delete Debts Confirmed
+        $("#debts_delete_confirmation_yes").click(function(){
+            $("#debts_delete_confirmation").modal('hide');
+
+            $.ajax({
+                url:"/php/deleteDebts.php",
+                method:"POST",
+                data:{delete_debt_id: delete_debt_id},
+                success: function(data){
+                    $('#debt_removed').modal('show');
+                    $('#debt_table').html(data);            
+                }
+            });
+        });
+
+        $("#debts_delete_confirmation_no").click(function(){
+            $("#debts_delete_confirmation").modal('hide');
         });
     });
 
