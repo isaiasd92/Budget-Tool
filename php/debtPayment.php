@@ -23,9 +23,9 @@
                 $payment_is_paid = $payment_select_query_row["is_paid"];
             }
         }
-
+        $current_date = date("Y-m-d");
         $payment_update_debt_query = "UPDATE debt SET amount = '$payment_new_balance', is_paid = '$payment_is_paid' WHERE id = '$payment_debt_id'; ";
-        $payment_insert_query = "INSERT INTO debt_payments (debt_id, amount) VALUES ('$payment_debt_id', '$payment_debt_amount'); ";
+        $payment_insert_query = "INSERT INTO debt_payments (debt_id, amount, date_paid) VALUES ('$payment_debt_id', '$payment_debt_amount', '$current_date' ); ";
         
         if((mysqli_query($conn, $payment_update_debt_query)) && (mysqli_query($conn, $payment_insert_query))){
             $payment_update_debt_select_query = "SELECT id, company, amount, due_date, is_paid FROM debt ORDER BY id ASC;";
