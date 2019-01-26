@@ -197,5 +197,22 @@
 </div>
 <!-- End Settings Updated Popup -->
 
+<!-- Invalid Date Popup -->
+<div id="invalid_date" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content confirmation">
+            <div class="modal-header" style="text-align: center; font-size: 30px;">
+                <label> Invalid Date! </label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="close" data-dismiss="modal" style="width: 100%; opacity: 1">
+                    <span class="btn btn-success glyphicon glyphicon-ok" style="width: 150px"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Invalid Date Popup -->
+
 <!-- Close MySQL Connection -->
 <?php mysqli_close($conn); ?>

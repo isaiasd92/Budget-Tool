@@ -651,19 +651,28 @@ $(document).ready(function(){
 
         var settings_day = $('#settings_day').val();
 
-        $.ajax({
-            url     : '/php/updateSettings.php',
-            method  : 'POST', 
-            data    : {
-                    settings_auto_update : settings_auto_update,
-                    settings_send_emails : settings_send_emails,
-                    settings_day : settings_day
-            },
-            success  : function(data){
-                $("#settings-container").html(data);
-                $("#settings_updated").modal('show');
-            }
-        });
+        if(("1" <= settings_day) && (settings_day <= "31")){
+            $("#settings_day").removeClass("alert alert-danger");
+            $("#invalid_date").modal("hide");
+
+            $.ajax({
+                url     : '/php/updateSettings.php',
+                method  : 'POST', 
+                data    : {
+                        settings_auto_update : settings_auto_update,
+                        settings_send_emails : settings_send_emails,
+                        settings_day : settings_day
+                },
+                success  : function(data){
+                    $("#settings-container").html(data);
+                    $("#settings_updated").modal('show');
+                }
+            });
+        }
+        else{
+            $("#settings_day").addClass("alert alert-danger");
+            $("#invalid_date").modal("show");
+        }
     });
 
     // Menu Collapse Icon Changer
