@@ -167,6 +167,14 @@
                 }
             ?>
 
+            <!-- Email Now Button -->
+            <div class="row">
+                <button type="button" name="update" id="email_now" class="btn btn-primary">
+                    Email Monthly Summary Now
+                </button>
+            </div>
+            <!-- End Email Now Button -->
+
             <!-- Save Settings -->
             <div class="row">
                 <button type="button" name="update" id="update_settings" class="btn btn-success">
@@ -196,6 +204,40 @@
     </div>
 </div>
 <!-- End Settings Updated Popup -->
+
+<!-- Email Sent Popup -->
+<div id="email_sent" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content confirmation">
+            <div class="modal-header" style="text-align: center; font-size: 30px;">
+                <label> Email Sent! </label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="close" data-dismiss="modal" style="width: 100%; opacity: 1">
+                    <span class="btn btn-success glyphicon glyphicon-ok" style="width: 150px"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Email Sent Popup -->
+
+<!-- Email Failed Popup -->
+<div id="email_fail" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content confirmation">
+            <div class="modal-header alert alert-danger" style="text-align: center; font-size: 30px;">
+                <label> Email Failed! <span class="glyphicon glyphicon-remove-sign"></span> </label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="close" data-dismiss="modal" style="width: 100%; opacity: 1">
+                    <span class="btn btn-success glyphicon glyphicon-ok" style="width: 150px"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Email Failed Popup -->
 
 <!-- Invalid Date Popup -->
 <div id="invalid_date" class="modal fade">

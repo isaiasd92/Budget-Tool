@@ -35,16 +35,9 @@
                     $auto_insert_bills_query = "INSERT INTO bills (company, due_date, amount, notes, is_paid) VALUES ('$newCompany', '$newDate', $newAmount, '$newNotes', 0, 0); ";
                     mysqli_query($conn, $auto_insert_bills_query);
                 }
-
-                /* For Testing Purposes */
-                //$output .= $auto_insert_bills_query;
-                //$output .= $auto_update_update_query;
             }
         }
     }
-    
-    /* For Testing Purposes */
-    //echo $output;
     
     mysqli_close($conn); 
 ?>

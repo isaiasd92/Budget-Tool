@@ -278,6 +278,7 @@
                 </div>
                 <div id="collapseBill" class="panel-collapse collapse">
                     <div class="panel-body">
+                        
                         <!-- Table -->
                         <div  id="bill_table" class="table-responsive">
                             <table class="table table-bordered">
@@ -341,6 +342,7 @@
                             </table>
                         </div>
                         <!-- End Table -->
+
                     </div>
                 </div>
             </div>

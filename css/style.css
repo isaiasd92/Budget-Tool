@@ -128,11 +128,13 @@ body {
 	transform: scale(1.1);
 }
 
-#bill-chart-legend-button{
+#bill-chart-legend-button,
+#debt-chart-legend-button{
 	text-align: right;
 }
 
-#bill-chart-legend_dropdown{
+#bill-chart-legend_dropdown,
+#debt-chart-legend_dropdown{
 	width: 50px;
 	height: 40px;
 	background-color: #007bff;
@@ -146,7 +148,14 @@ body {
 	margin-right: 10px;
 }
 
-#bill-chart-failure{
+#debt-chart-legend-container{
+	width: 230px;
+	margin-right: 7px;
+	margin-left: 7px;
+}
+
+#bill-chart-failure,
+#debt-chart-failure{
 	text-align: center;
 	color: red;
 }
@@ -268,6 +277,11 @@ body {
 	width: 150px;
     height: 50px;
 	font-size: 20px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+#email_now{
 	margin-top: 50px;
 }
 

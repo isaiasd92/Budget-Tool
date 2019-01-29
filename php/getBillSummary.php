@@ -21,7 +21,6 @@
 
         $bill_date_company_counter = 1;
         $bill_date_amount_counter = 1;
-        $bill_date_color_counter = 1;
 
         /* Generates a random color for the chart */
         function rand_color() {

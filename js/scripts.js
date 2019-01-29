@@ -33,7 +33,7 @@ $(document).ready(function(){
         var billMonth = todayDate.getMonth() + 1;
 
         $.ajax({
-            url:"/php/autoUpdate.php",
+            url:"/php/autoUpdateBills.php",
             method:"POST",
             data:{
                 billMonth : billMonth
@@ -199,20 +199,13 @@ $(document).ready(function(){
     // Bills Chart Legend click event
     $(document).on('click', '#bill-chart-legend > ul > li', function(e){
         var index = $(this).index();
-        $(this).toggleClass("strike")
+        $(this).toggleClass("strike");
         var ci = e.view.myBillChart;
-        console.log(index)
-        console.log();
+        console.log(index);
         var curr = ci.data.datasets[0]._meta[0].data[index];
-        curr.hidden = !curr.hidden
+        curr.hidden = !curr.hidden;
         ci.update();
-    })
-
-    // Converts the month number to the month name
-    function GetMonthName(monthNumber) {
-        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        return months[monthNumber - 1];
-    }
+    });
 
     // Year Button Click
     $(document).on('click', '.year-button', function(){
@@ -293,6 +286,23 @@ $(document).ready(function(){
     // ##############################################
     //                  INCOME
     // ##############################################
+
+    // Automatically Update Incomes
+    $(document).ready(function(){
+        var todayDate = new Date();
+        var incomeMonth = todayDate.getMonth() + 1;
+
+        $.ajax({
+            url:"/php/autoUpdateIncomes.php",
+            method:"POST",
+            data:{
+                incomeMonth : incomeMonth
+                },
+            success: function(data){
+                console.log(data);
+            }
+        });
+    });
 
     // View Income Info
     $(document).on('click', '.view_incomes', function(){
@@ -469,7 +479,7 @@ $(document).ready(function(){
                 success : function(data){
                     $('#add_debt_modal').modal('hide');
                     $('#debt_added').modal('show');
-                    $('#debt_table').html(data);
+                    $('.debt_table').html(data);
                     $('#add_debt_form')[0].reset();
                 }
             });
@@ -528,7 +538,7 @@ $(document).ready(function(){
             success  : function(data){
                 $('#pay_debt_modal').modal('hide');
                 $('#debt_payment_modal').modal('show');
-                $('#debt_table').html(data);
+                $('.debt_table').html(data);
             }
         });
     });
@@ -578,7 +588,7 @@ $(document).ready(function(){
             success  : function(data){
                 $('#edit_debt_modal').modal('hide');
                 $('#debt_updated').modal('show');
-                $('#debt_table').html(data);
+                $('.debt_table').html(data);
             }
         });
     });
@@ -598,7 +608,7 @@ $(document).ready(function(){
                 data:{delete_debt_id: delete_debt_id},
                 success: function(data){
                     $('#debt_removed').modal('show');
-                    $('#debt_table').html(data);            
+                    $('.debt_table').html(data);            
                 }
             });
         });
@@ -606,6 +616,56 @@ $(document).ready(function(){
         $("#debts_delete_confirmation_no").click(function(){
             $("#debts_delete_confirmation").modal('hide');
         });
+    });
+
+    // Chart Button Click
+    $(document).on('click', '#debt-chartButton', function(){
+        $("#debt-icon-chartButton").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+
+        var thisDate = new Date();
+        var currMonth = thisDate.getMonth() + 1;
+        var thisMonth = GetMonthName(currMonth);
+
+        $.ajax({
+            url:"/php/getDebtSummary.php",
+            method:"POST",
+            data:{
+                    thisMonth : thisMonth
+            },
+            success: function(data){
+                if(data == "Fail"){
+                    var script   = document.createElement("script");
+                    script.setAttribute('id', 'thisDebtChart');
+                    script.type  = "text/javascript";
+                    document.body.appendChild(script);
+                }
+                else{
+                    $("canvas#line_chart").remove();
+                    $("div.debt_line_chart").append('<canvas id="line_chart" width="100%" height="100%"></canvas>');
+                    $("#thisDebtChart").html(data);
+                    $("#debt-chart-legend-container").removeClass("hide");
+                    $("#debt-chart-legend-button").removeClass("hide");
+                    $("#debt-chart-legend-container ul").addClass("list-group");
+                    $("#debt-chart-legend-container ul li").addClass("list-group-item");
+                }
+            }
+        });
+    });
+
+    // Debt Chart Legend click event
+    $(document).on('click', '#debt_chart_legend > ul > li', function(e){
+        var index = $(this).index();
+        $(this).toggleClass("strike");
+        var ci = e.view.myDebtChart;
+        console.log(index);
+        var curr = ci.data.datasets[0]._meta[0].data[index];
+        curr.hidden = !curr.hidden;
+        ci.update();
+    });
+
+    // Table Button Click
+    $(document).on('click', '#debt-tableButton', function(){
+        $("#debt-icon-tableButton").removeClass("glyphicon-minus").addClass("glyphicon-plus");
     });
 
     // Change Input Style
@@ -675,12 +735,42 @@ $(document).ready(function(){
         }
     });
 
+    // Email Monthly Summary Now
+    $(document).on('click', "#email_now", function(){
+        var thisDate = new Date();
+        var currMonth = thisDate.getMonth() + 1;
+        var thisMonth = GetMonthName(currMonth);
+
+        $.ajax({
+            url     : '/php/email.php',
+            method  : 'POST', 
+            data    : {
+                    thisMonth : thisMonth
+            },
+            success  : function(data){
+                if(data == "sent"){
+                    $("#email_sent").modal('show');
+                }
+                else{
+                    //$("#email_fail").modal('show');
+                    console.log(data);
+                }
+            }
+        });
+    });
+
     // Menu Collapse Icon Changer
     $('.collapse').on('shown.bs.collapse', function(){
         $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
         }).on('hidden.bs.collapse', function(){
             $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
     });
+
+    // Converts the month number to the month name
+    function GetMonthName(monthNumber) {
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return months[monthNumber - 1];
+    }
 
     // Add Due Date Defaults
     $.fn.datepicker.defaults.autoclose = true;

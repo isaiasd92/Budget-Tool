@@ -29,7 +29,11 @@
         <!-- Javascript -->
         <script src="js/bootstrap.min.js"></script>
         <script src="js/bootstrap-table.js"></script>
+        <script src="js/chart.bundle.js"></script>
         <script src="js/scripts.js"></script>
+
+        <!-- Summary Chart -->
+        <script id="thisDebtChart"></script>
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,6 +43,7 @@
         <![endif]-->
     </head>
     <body>
+
         <!-- Navbar -->
         <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
             <div id="banner">
@@ -70,75 +75,135 @@
             </div>
         </nav>
         <!-- End Navbar -->
-        <!-- Table -->
-        <div  id="debt_table" class="table-responsive">
-            <table class="table table-bordered">
-                <tr class="results" >
-                    <th>Debt</th>
-                    <th>Amount</th>
-                    <th>Pay Off</th>
-                    <th>Paid</th>
-                    <th></th>
-                </tr>
-                <?php
-                    $debt_query = "SELECT id, company, amount, due_date, is_paid FROM debt ORDER BY id ASC";
-                    $debt_result = mysqli_query($conn, $debt_query);
 
-                    while($debt_row = mysqli_fetch_array($debt_result))
-                    {
-                ?>
-                <tr id="<?php echo $debt_row["id"]; ?>">
-                    <td data-target="debt_list_company">
-                        <?php echo $debt_row["company"]; ?>
-                    </td>
-                    <td data-target="debt_list_amount">
-                        <?php echo $debt_row["amount"]; ?>
-                    </td>
-                    <td data-target="debt_list_due_date">
-                        <?php echo date("m/d/Y", strtotime($debt_row["due_date"])) ?>
-                    </td>
-                        <?php   
-                            if($debt_row["is_paid"] == 0)
-                            {
-                        ?>
-                        <td data-target="debt_list_is_paid">
-                            No
-                        </td>
-                        <?php
-                            }
-                            else
-                            {
-                        ?>
-                        <td data-target="debt_list_is_paid" style="background-color: lightgreen;">
-                            Yes
-                        </td>
-                        <?php
-                            }
-                        ?>
-                    <td>
-                        <button data-id="<?php echo $debt_row["id"]; ?>" class="menuButton view_debts_payments btn btn-primary">
-                            <span class="glyphicon glyphicon-list-alt"></span>
-                        </button>
-                        <button data-id="<?php echo $debt_row["id"]; ?>" class="menuButton pay_debts btn btn-success">
-                            <span class="glyphicon glyphicon-usd"></span>
-                        </button>
-                        <button data-id="<?php echo $debt_row["id"]; ?>" class="menuButton view_debts btn btn-secondary">
-                            <span class="glyphicon glyphicon-info-sign"></span>
-                        </button>
-                        <button data-id="<?php echo $debt_row["id"]; ?>" class="menuButton edit_debts btn btn-warning">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        </button>
-                        <button data-id="<?php echo $debt_row["id"]; ?>" class="menuButton delete_debt btn btn-danger">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                    </td>
-                </tr>
-                <?php
-                    }
-                ?>
-            </table>
+        <!-- Debt Chart Collapse Bar -->
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                <a class="accordion-toggle" id="debt-chartButton" style="text-decoration:none" data-toggle="collapse" data-parent="#accordion" href="#collapseChart">
+                    <h4 class="panel-title">
+                        <span id="debt-icon-chartButton" class="glyphicon glyphicon-plus"></span>
+                        Chart
+                    </h4>
+                </a>
+                </div>
+                <div id="collapseChart" class="panel-collapse collapse">
+                    <div class="panel-body">
+
+                        <!-- Chart Legend -->
+                        <div id="debt-chart-legend-button" class="dropdown hide">
+                            <button class="btn dropdown-toggle" type="button" id="debt-chart-legend_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon glyphicon-list"></span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div id="debt-chart-legend-container" class="dropdown-item row">
+                                    <div id="debt_chart_legend" class="chart-legend"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Chart Legend -->
+                        
+                        <!-- Chart -->
+                        <div class="debt_line_chart">
+                            <canvas id="line_chart" width="100%" height="100%"></canvas>
+                        </div>
+                        <!-- End Chart -->
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- End Table -->
+        <!-- End Debt Chart Collapse Bar -->
+
+        <!-- Debt Collapse Bar -->
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                <a class="accordion-toggle" id="debt-tableButton" style="text-decoration:none" data-toggle="collapse" data-parent="#accordion" href="#collapseDebt">
+                    <h4 class="panel-title">
+                        <span id="bill-icon-tableButton" class="glyphicon glyphicon-plus"></span>
+                        Table
+                    </h4>
+                </a>
+                </div>
+                <div id="collapseDebt" class="panel-collapse collapse">
+                    <div class="panel-body">
+
+                        <!-- Table -->
+                        <div  class="debt_table table-responsive">
+                            <table class="table table-bordered">
+                                <tr class="results" >
+                                    <th>Debt</th>
+                                    <th>Amount</th>
+                                    <th>Pay Off</th>
+                                    <th>Paid</th>
+                                    <th></th>
+                                </tr>
+                                <?php
+                                    $debt_query = "SELECT id, company, amount, due_date, is_paid FROM debt ORDER BY id ASC";
+                                    $debt_result = mysqli_query($conn, $debt_query);
+
+                                    while($debt_row = mysqli_fetch_array($debt_result))
+                                    {
+                                ?>
+                                <tr id="<?php echo $debt_row["id"]; ?>">
+                                    <td data-target="debt_list_company">
+                                        <?php echo $debt_row["company"]; ?>
+                                    </td>
+                                    <td data-target="debt_list_amount">
+                                        <?php echo $debt_row["amount"]; ?>
+                                    </td>
+                                    <td data-target="debt_list_due_date">
+                                        <?php echo date("m/d/Y", strtotime($debt_row["due_date"])) ?>
+                                    </td>
+                                        <?php   
+                                            if($debt_row["is_paid"] == 0)
+                                            {
+                                        ?>
+                                        <td data-target="debt_list_is_paid">
+                                            No
+                                        </td>
+                                        <?php
+                                            }
+                                            else
+                                            {
+                                        ?>
+                                        <td data-target="debt_list_is_paid" style="background-color: lightgreen;">
+                                            Yes
+                                        </td>
+                                        <?php
+                                            }
+                                        ?>
+                                    <td>
+                                        <button data-id="<?php echo $debt_row["id"]; ?>" class="menuButton view_debts_payments btn btn-primary">
+                                            <span class="glyphicon glyphicon-list-alt"></span>
+                                        </button>
+                                        <button data-id="<?php echo $debt_row["id"]; ?>" class="menuButton pay_debts btn btn-success">
+                                            <span class="glyphicon glyphicon-usd"></span>
+                                        </button>
+                                        <button data-id="<?php echo $debt_row["id"]; ?>" class="menuButton view_debts btn btn-secondary">
+                                            <span class="glyphicon glyphicon-info-sign"></span>
+                                        </button>
+                                        <button data-id="<?php echo $debt_row["id"]; ?>" class="menuButton edit_debts btn btn-warning">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
+                                        <button data-id="<?php echo $debt_row["id"]; ?>" class="menuButton delete_debt btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <?php
+                                    }
+                                ?>
+                            </table>
+                        </div>
+                        <!-- End Table -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Debt Collapse Bar -->
+
         <button id="addNew" class="menuButton btn btn-primary" data-toggle="modal" data-target="#add_debt_modal">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
