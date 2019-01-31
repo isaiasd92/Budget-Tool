@@ -3,6 +3,7 @@
 *~
 db.php
 email.php
+autoSendEmail.php
 
 # ignore Composer downloads
 /vendor/*
