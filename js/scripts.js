@@ -739,24 +739,27 @@ $(document).ready(function(){
     $(document).on('click', "#email_now", function(){
         var thisDate = new Date();
         var currMonth = thisDate.getMonth() + 1;
+        var currYear = thisDate.getFullYear();
         var thisMonth = GetMonthName(currMonth);
 
         $.ajax({
             url     : '/php/email.php',
             method  : 'POST', 
             data    : {
-                    thisMonth : thisMonth
+                    thisMonth : thisMonth,
+                    currMonth : currMonth,
+                    currYear : currYear
             },
             success  : function(data){
-                if(data == "sent"){
-                    $("#email_sent").modal('show');
+                if(data == "fail"){
+                    $("#email_fail").modal('show');
                 }
-                else{
-                    //$("#email_fail").modal('show');
-                    console.log(data);
+                else if(data == "sent"){
+                    $("#email_sent").modal('show');
                 }
             }
         });
+        $("#email_sent").modal('show');
     });
 
     // Menu Collapse Icon Changer
